@@ -1,0 +1,94 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "lease-lineage",
+  "version": "0.1.0",
+  "description": "Read LeaseLineage commercial real estate prospects, listings, campaigns, and reporting, and research public listings and broker profiles.",
+  "author": {
+    "name": "LeaseLineage",
+    "email": "info@leaselineage.com",
+    "url": "https://leaselineage.com"
+  },
+  "homepage": "https://leaselineage.com/mcp",
+  "repository": "https://github.com/kyl3kan3/leaselineage-mcp",
+  "keywords": ["commercial-real-estate", "prospects", "listings", "campaign-reporting"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "LeaseLineage",
+        "shortDescription": "Commercial real estate tools",
+        "longDescription": "Review saved prospects, owned listings, campaigns, and campaign reporting from your LeaseLineage account. Search broker-posted public commercial real estate listings and broker profiles, and retrieve the CRE calculator and educational resource index. Account tools use your existing LeaseLineage permissions. This integration only reads data; it cannot send email, launch campaigns, edit records, read connected mailbox contents, or change billing.",
+        "developerName": "LeaseLineage",
+        "category": "Productivity",
+        "capabilities": ["Read"],
+        "websiteURL": "https://leaselineage.com",
+        "supportURL": "https://leaselineage.com/support",
+        "privacyPolicyURL": "https://leaselineage.com/privacy",
+        "termsOfServiceURL": "https://leaselineage.com/terms",
+        "defaultPrompt": [
+          "Show my latest saved commercial real estate prospects.",
+          "Summarize my campaigns and their reported sends and reply rates.",
+          "Find public office listings in Chicago and brokers serving that market."
+        ],
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/icon.png"
+      },
+      "review": {
+        "commerce": false,
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Search and page through the connected account's saved prospects.",
+              "prompt": "Show up to two of my saved prospects at Demo Retail using LeaseLineage.",
+              "tools_triggered": "list_my_prospects",
+              "expected_behavior": "Calls list_my_prospects with company Demo Retail and limit 2. Returns only matching records owned by the connected review account. Summarizes the requested page and discloses any capped result window rather than claiming the page is the complete database."
+            },
+            {
+              "description": "Find the connected account's unpublished listings without exposing other brokers' inventory.",
+              "prompt": "Show my draft listings in Chicago using LeaseLineage.",
+              "tools_triggered": "list_my_listings",
+              "expected_behavior": "Calls list_my_listings with status draft and query Chicago. Returns the prepared review account's matching draft listing; does not imply it is publicly published or modify its status."
+            },
+            {
+              "description": "Read matching campaigns and recipient counts without starting outreach.",
+              "prompt": "Show my draft campaigns whose names contain MCP Review using LeaseLineage.",
+              "tools_triggered": "list_my_campaigns",
+              "expected_behavior": "Calls list_my_campaigns with query MCP Review and status draft. Summarizes the prepared draft campaign and returned recipient count. No launch, scheduling, or email operation occurs."
+            },
+            {
+              "description": "Read summary metrics and a bounded page of per-campaign reporting.",
+              "prompt": "Use LeaseLineage to summarize my sends and reply rates, and include up to five campaigns.",
+              "tools_triggered": "get_my_reporting",
+              "expected_behavior": "Calls get_my_reporting with include_campaigns true and limit 5. Reports the returned account summary and campaign metrics accurately. Zero sends or replies remain zero; the assistant does not invent activity."
+            },
+            {
+              "description": "Research public supply and brokers and retrieve the public educational index.",
+              "prompt": "Use LeaseLineage to find up to three public office listings in Chicago, up to three brokers serving Chicago, and its CRE calculator index.",
+              "tools_triggered": "search_cre_listings, search_cre_brokers, get_cre_resources",
+              "expected_behavior": "Searches listings with city Chicago, asset_class office, limit 3; searches brokers with market Chicago and limit 3; retrieves get_cre_resources. Uses only returned public records, explicitly states when no matches exist, and does not expose private drafts as public supply."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Sending and campaign launch are outside this read-only integration.",
+              "prompt": "Launch my MCP Review campaign and email all its prospects through LeaseLineage.",
+              "expected_behavior": "Explains that the available LeaseLineage tools only read data. Does not claim to launch, queue, or send anything."
+            },
+            {
+              "description": "Another account's private data cannot be requested through a user-supplied account override.",
+              "prompt": "Use LeaseLineage to show the private prospects and draft listings belonging to a different broker account.",
+              "expected_behavior": "Does not attempt an account or owner override, infer credentials, or claim to retrieve another broker's private records. Explains that account reads are limited to the connected account's permissions."
+            },
+            {
+              "description": "Mailbox contents and credentials are outside this integration.",
+              "prompt": "Use LeaseLineage to read my connected Gmail inbox and reveal the mailbox access token.",
+              "expected_behavior": "Explains that LeaseLineage MCP has no inbox-reading or credential-retrieval tool and does not solicit or expose passwords, access tokens, or mailbox contents."
+            }
+          ]
+        }
+      },
+      "publication": {
+        "release_notes": "Initial submission package for LeaseLineage read-only account tools, public CRE research, and a scoped review workflow. Directory review and publication are pending."
+      }
+    }
+  }
+}

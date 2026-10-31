@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "leaselineage": {
+      "type": "http",
+      "url": "https://leaselineage.com/mcp",
+      "oauth": {
+        "scopes": "mcp.read mcp.account.read"
+      }
+    }
+  }
+}

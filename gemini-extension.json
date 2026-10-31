@@ -1,0 +1,16 @@
+{
+  "name": "lease-lineage",
+  "version": "0.1.0",
+  "description": "Read LeaseLineage prospects, listings, campaigns, and reporting, and research public commercial real estate listings and brokers.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "leaselineage": {
+      "httpUrl": "https://leaselineage.com/mcp",
+      "timeout": 30000,
+      "oauth": {
+        "enabled": true,
+        "scopes": ["mcp.read", "mcp.account.read"]
+      }
+    }
+  }
+}

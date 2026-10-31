@@ -1,0 +1,12 @@
+{
+  "name": "lease-lineage",
+  "version": "0.1.0",
+  "description": "Read LeaseLineage prospects, listings, campaigns, and reporting, and research public commercial real estate listings and brokers.",
+  "author": {
+    "name": "LeaseLineage",
+    "email": "info@leaselineage.com"
+  },
+  "homepage": "https://leaselineage.com/mcp",
+  "repository": "https://github.com/kyl3kan3/leaselineage-mcp",
+  "keywords": ["commercial-real-estate", "prospects", "listings", "campaign-reporting"]
+}
