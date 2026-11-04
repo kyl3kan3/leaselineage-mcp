@@ -1,6 +1,6 @@
 # LeaseLineage integration
 
-[![M8ven Score](https://m8ven.ai/badge/mcp/kyl3kan3/leaselineage-mcp)](https://m8ven.ai/mcp/kyl3kan3/leaselineage-mcp?s=readme)
+[![M8ven Score](https://m8ven.ai/badge/mcp/kyl3kan3-leaselineage-mcp-nzqtsh)](https://m8ven.ai/mcp/kyl3kan3-leaselineage-mcp-nzqtsh?s=readme)
 
 This configuration-only package connects an assistant to LeaseLineage's read-only commercial real
 estate tools and includes a workflow for reviewing prospects, inventory, and
